@@ -77,6 +77,23 @@ app.put("/api/courses/:id", (request, response) => {
   response.send(course);
 });
 
+app.delete("/api/courses/:id", (request, response) => {
+  // Look out the course
+  // If not exist, return 404
+  const course = courses.find(
+    (course) => course.id === parseInt(request.params.id)
+  );
+  if (!course)
+    response.status(404).send("The course with the given id was not found");
+
+  // Delete Course
+  const courseIndex = courses.indexOf(course);
+  courses.splice(courseIndex, 1);
+
+  // Return the deleted Course
+  response.send(course);
+});
+
 // app.get("/api/posts/:year/:month", (request, response) =>
 //   response.send(request.params)
 // );
