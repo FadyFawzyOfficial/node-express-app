@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
 
+app.use(express.json());
+
 const courses = [
   { id: 1, name: "Course 1" },
   { id: 2, name: "Course 2" },
@@ -17,6 +19,15 @@ app.get("/api/courses/:id", (request, response) => {
   );
   if (!course)
     response.status(404).send("The course with the given id was not found");
+  response.send(course);
+});
+
+app.post("/api/courses", (request, response) => {
+  const course = {
+    id: courses.length + 1,
+    name: request.body.name,
+  };
+  courses.push(course);
   response.send(course);
 });
 
