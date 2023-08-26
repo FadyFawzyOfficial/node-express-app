@@ -1,4 +1,5 @@
 const express = require("express");
+const Joi = require("joi");
 const app = express();
 
 app.use(express.json());
@@ -23,6 +24,31 @@ app.get("/api/courses/:id", (request, response) => {
 });
 
 app.post("/api/courses", (request, response) => {
+  const schema = Joi.object({
+    name: Joi.string().min(3).required(),
+  });
+
+  const validation = schema.validate(request.body);
+  //   console.log(validation);
+
+  if (validation.error) {
+    response.status(400).send(validation.error.details[0].message);
+    return;
+  }
+
+  //   if (!request.body.name) {
+  //     // 400 Bad Request
+  //     response.status(400).send("Course name is required.");
+  //     return;
+  //   }
+
+  //   if (request.body.name.length < 3) {
+  //     response
+  //       .status(400)
+  //       .send("Course name should be at least 3 characters long.");
+  //     return;
+  //   }
+
   const course = {
     id: courses.length + 1,
     name: request.body.name,
