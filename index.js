@@ -57,6 +57,35 @@ app.post("/api/courses", (request, response) => {
   response.send(course);
 });
 
+app.put("/api/courses/:id", (request, response) => {
+  // Look out the course
+  // If not exist, return 404
+  const course = courses.find(
+    (course) => course.id === parseInt(request.params.id)
+  );
+  if (!course)
+    response.status(404).send("The course with the given id was not found");
+
+  // Validate
+  // If invalid, return 400 - Bad Request
+  const schema = Joi.object({
+    name: Joi.string().min(3).required(),
+  });
+
+  const validation = schema.validate(request.body);
+  //   console.log(validation);
+
+  if (validation.error) {
+    response.status(400).send(validation.error.details[0].message);
+    return;
+  }
+
+  // Update Course
+  // Return the updated Course
+  course.name = request.body.name;
+  response.send(course);
+});
+
 // app.get("/api/posts/:year/:month", (request, response) =>
 //   response.send(request.params)
 // );
