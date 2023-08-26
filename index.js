@@ -24,11 +24,7 @@ app.get("/api/courses/:id", (request, response) => {
 });
 
 app.post("/api/courses", (request, response) => {
-  const schema = Joi.object({
-    name: Joi.string().min(3).required(),
-  });
-
-  const validation = schema.validate(request.body);
+  const validation = validateCourse(request.body);
   //   console.log(validation);
 
   if (validation.error) {
@@ -68,12 +64,7 @@ app.put("/api/courses/:id", (request, response) => {
 
   // Validate
   // If invalid, return 400 - Bad Request
-  const schema = Joi.object({
-    name: Joi.string().min(3).required(),
-  });
-
-  const validation = schema.validate(request.body);
-  //   console.log(validation);
+  const validation = validateCourse(request.body);
 
   if (validation.error) {
     response.status(400).send(validation.error.details[0].message);
@@ -96,3 +87,11 @@ app.get("/api/posts/:year/:month", (request, response) =>
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port ${port} ...`));
+
+function validateCourse(course) {
+  const schema = Joi.object({
+    name: Joi.string().min(3).required(),
+  });
+
+  return schema.validate(course);
+}
