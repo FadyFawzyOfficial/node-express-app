@@ -18,32 +18,19 @@ app.get("/api/courses/:id", (request, response) => {
   const course = courses.find(
     (course) => course.id === parseInt(request.params.id)
   );
+
   if (!course)
-    response.status(404).send("The course with the given id was not found");
+    return response
+      .status(404)
+      .send("The course with the given id was not found");
+
   response.send(course);
 });
 
 app.post("/api/courses", (request, response) => {
   const { error } = validateCourse(request.body);
-  //   console.log(validation);
 
-  if (error) {
-    response.status(400).send(error.details[0].message);
-    return;
-  }
-
-  //   if (!request.body.name) {
-  //     // 400 Bad Request
-  //     response.status(400).send("Course name is required.");
-  //     return;
-  //   }
-
-  //   if (request.body.name.length < 3) {
-  //     response
-  //       .status(400)
-  //       .send("Course name should be at least 3 characters long.");
-  //     return;
-  //   }
+  if (error) return response.status(400).send(error.details[0].message);
 
   const course = {
     id: courses.length + 1,
@@ -59,17 +46,17 @@ app.put("/api/courses/:id", (request, response) => {
   const course = courses.find(
     (course) => course.id === parseInt(request.params.id)
   );
+
   if (!course)
-    response.status(404).send("The course with the given id was not found");
+    return response
+      .status(404)
+      .send("The course with the given id was not found");
 
   // Validate
   // If invalid, return 400 - Bad Request
   const { error } = validateCourse(request.body);
 
-  if (error) {
-    response.status(400).send(error.details[0].message);
-    return;
-  }
+  if (error) return response.status(400).send(error.details[0].message);
 
   // Update Course
   // Return the updated Course
@@ -83,8 +70,11 @@ app.delete("/api/courses/:id", (request, response) => {
   const course = courses.find(
     (course) => course.id === parseInt(request.params.id)
   );
+
   if (!course)
-    response.status(404).send("The course with the given id was not found");
+    return response
+      .status(404)
+      .send("The course with the given id was not found");
 
   // Delete Course
   const courseIndex = courses.indexOf(course);
