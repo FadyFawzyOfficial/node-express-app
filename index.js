@@ -23,6 +23,19 @@ app.get("/api/courses/:id", (request, response) => {
 });
 
 app.post("/api/courses", (request, response) => {
+  if (!request.body.name) {
+    // 400 Bad Request
+    response.status(400).send("Course name is required.");
+    return;
+  }
+
+  if (request.body.name.length < 3) {
+    response
+      .status(400)
+      .send("Course name should be at least 3 characters long.");
+    return;
+  }
+
   const course = {
     id: courses.length + 1,
     name: request.body.name,
