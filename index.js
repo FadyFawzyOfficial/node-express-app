@@ -4,6 +4,16 @@ const app = express();
 
 app.use(express.json());
 
+app.use((request, response, next) => {
+  console.log("Logging ...");
+  next();
+});
+
+app.use((request, response, next) => {
+  console.log("Authenticating ...");
+  next();
+});
+
 const courses = [
   { id: 1, name: "Course 1" },
   { id: 2, name: "Course 2" },
