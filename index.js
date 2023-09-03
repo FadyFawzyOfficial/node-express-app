@@ -6,6 +6,13 @@ const app = express();
 
 app.use(express.json());
 
+// This Middleware function parses incoming request with url encoded payloads
+// and populates request.body like a JSON Object.
+app.use(express.urlencoded({ extended: true }));
+// We use this Middleware to serve the static class.
+// This folder will contain project's static assets, like css, images and so on.
+app.use(express.static("public"));
+
 app.use(logger);
 
 app.use(authenticator);
