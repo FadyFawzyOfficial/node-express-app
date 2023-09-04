@@ -22,8 +22,13 @@ app.use(express.static("public"));
 
 // Helmet helps secure Express apps by setting HTTP response headers.
 app.use(helmet());
-// HTTP request logger middleware for node.js
-app.use(morgan("tiny"));
+
+//* Enable logging of Http Request only on the Development Machine
+if (app.get("env") === "development") {
+  // HTTP request logger middleware for node.js
+  app.use(morgan("tiny"));
+  console.log("Morgan Enabled...");
+}
 
 app.use(logger);
 
