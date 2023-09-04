@@ -1,0 +1,6 @@
+{   
+    // Here, we only have the mapping of our configuration settings to environment variables
+    "mail": {
+        "password": "app_password"
+    }
+}

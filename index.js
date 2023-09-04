@@ -27,6 +27,12 @@ app.use(helmet());
 // Configuration
 console.log(`Application Name: ${config.get("name")}`);
 console.log(`Mail Server: ${config.get("mail.host")}`);
+//* Display the password of the mail server:
+//! So, this config object looks at various sources to find a value
+//! for this configuration, the source could be a configuration file,
+//! a json file, it can be an 'environment variable', it can also be a
+//! command line argument.
+console.log(`Mail Password: ${config.get("mail.password")}`);
 
 //* Enable logging of Http Request only on the Development Machine
 if (app.get("env") === "development") {
