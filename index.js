@@ -6,6 +6,11 @@ const authenticator = require("./authentication");
 const express = require("express");
 const app = express();
 
+console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
+//* If the NODE_ENV variable is not Set or Exported,
+//* the next statement will return 'development' by Default
+console.log(`App.env: ${app.get("env")}`);
+
 app.use(express.json());
 
 // This Middleware function parses incoming request with url encoded payloads
