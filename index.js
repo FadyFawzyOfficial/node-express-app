@@ -1,3 +1,4 @@
+const config = require("config");
 const helmet = require("helmet");
 const morgan = require("morgan");
 const Joi = require("joi");
@@ -22,6 +23,10 @@ app.use(express.static("public"));
 
 // Helmet helps secure Express apps by setting HTTP response headers.
 app.use(helmet());
+
+// Configuration
+console.log(`Application Name: ${config.get("name")}`);
+console.log(`Mail Server: ${config.get("mail.host")}`);
 
 //* Enable logging of Http Request only on the Development Machine
 if (app.get("env") === "development") {
