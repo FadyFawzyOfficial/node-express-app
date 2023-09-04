@@ -1,3 +1,5 @@
+const helmet = require("helmet");
+const morgan = require("morgan");
 const Joi = require("joi");
 const logger = require("./logger");
 const authenticator = require("./authentication");
@@ -12,6 +14,11 @@ app.use(express.urlencoded({ extended: true }));
 // We use this Middleware to serve the static class.
 // This folder will contain project's static assets, like css, images and so on.
 app.use(express.static("public"));
+
+// Helmet helps secure Express apps by setting HTTP response headers.
+app.use(helmet());
+// HTTP request logger middleware for node.js
+app.use(morgan("tiny"));
 
 app.use(logger);
 
