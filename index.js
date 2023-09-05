@@ -13,6 +13,11 @@ console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
 //* the next statement will return 'development' by Default
 console.log(`App.env: ${app.get("env")}`);
 
+//! When we set this, the Express will internally load this module.
+//! So, we don't have to require it.
+app.set("view engine", "pug");
+app.set("views", "./views"); // default values and path (is optional)
+
 app.use(express.json());
 
 // This Middleware function parses incoming request with url encoded payloads
@@ -52,7 +57,12 @@ const courses = [
   { id: 3, name: "Course 3" },
 ];
 
-app.get("/", (request, response) => response.send("Hello World!!!"));
+app.get("/", (request, response) =>
+  response.render("index", {
+    title: "Express App",
+    message: "Welcome to Fady Express App",
+  })
+);
 
 app.get("/api/courses", (request, response) => response.send(courses));
 
