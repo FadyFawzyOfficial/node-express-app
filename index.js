@@ -2,10 +2,10 @@ const debug = require("debug")("app:startup");
 const config = require("config");
 const helmet = require("helmet");
 const morgan = require("morgan");
-const logger = require("./logger");
+const logger = require("./middleware/logger");
 const home = require("./routes/home");
 const courses = require("./routes/courses");
-const authenticator = require("./authentication");
+const authenticator = require("./middleware/authentication");
 const express = require("express");
 const app = express();
 
