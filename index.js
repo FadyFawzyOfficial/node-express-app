@@ -2,7 +2,6 @@ const debug = require("debug")("app:startup");
 const config = require("config");
 const helmet = require("helmet");
 const morgan = require("morgan");
-const Joi = require("joi");
 const logger = require("./logger");
 const courses = require("./routes/courses");
 const authenticator = require("./authentication");
@@ -63,11 +62,3 @@ app.get("/", (request, response) =>
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port ${port} ...`));
-
-function validateCourse(course) {
-  const schema = Joi.object({
-    name: Joi.string().min(3).required(),
-  });
-
-  return schema.validate(course);
-}
