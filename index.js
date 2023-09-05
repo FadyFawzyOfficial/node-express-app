@@ -57,7 +57,12 @@ const courses = [
   { id: 3, name: "Course 3" },
 ];
 
-app.get("/", (request, response) => response.send("Hello World!!!"));
+app.get("/", (request, response) =>
+  response.render("index", {
+    title: "Express App",
+    message: "Welcome to Fady Express App",
+  })
+);
 
 app.get("/api/courses", (request, response) => response.send(courses));
 
