@@ -7,22 +7,9 @@ const courses = [
   { id: 3, name: "Course 3" },
 ];
 
-router.get("/api/courses", (request, response) => response.send(courses));
+router.get("/", (request, response) => response.send(courses));
 
-router.get("/api/courses/:id", (request, response) => {
-  const course = courses.find(
-    (course) => course.id === parseInt(request.params.id)
-  );
-
-  if (!course)
-    return response
-      .status(404)
-      .send("The course with the given id was not found");
-
-  response.send(course);
-});
-
-router.post("/api/courses", (request, response) => {
+router.post("/", (request, response) => {
   const { error } = validateCourse(request.body);
 
   if (error) return response.status(400).send(error.details[0].message);
@@ -35,7 +22,20 @@ router.post("/api/courses", (request, response) => {
   response.send(course);
 });
 
-router.put("/api/courses/:id", (request, response) => {
+router.get("/:id", (request, response) => {
+  const course = courses.find(
+    (course) => course.id === parseInt(request.params.id)
+  );
+
+  if (!course)
+    return response
+      .status(404)
+      .send("The course with the given id was not found");
+
+  response.send(course);
+});
+
+router.put("/:id", (request, response) => {
   // Look out the course
   // If not exist, return 404
   const course = courses.find(
@@ -59,7 +59,7 @@ router.put("/api/courses/:id", (request, response) => {
   response.send(course);
 });
 
-router.delete("/api/courses/:id", (request, response) => {
+router.delete("/:id", (request, response) => {
   // Look out the course
   // If not exist, return 404
   const course = courses.find(
@@ -78,13 +78,5 @@ router.delete("/api/courses/:id", (request, response) => {
   // Return the deleted Course
   response.send(course);
 });
-
-// app.get("/api/posts/:year/:month", (request, response) =>
-//   response.send(request.params)
-// );
-
-router.get("/api/posts/:year/:month", (request, response) =>
-  response.send(request.query)
-);
 
 module.exports = router;
