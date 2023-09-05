@@ -1,3 +1,4 @@
+const config = require("config");
 const helmet = require("helmet");
 const morgan = require("morgan");
 const Joi = require("joi");
@@ -5,6 +6,11 @@ const logger = require("./logger");
 const authenticator = require("./authentication");
 const express = require("express");
 const app = express();
+
+console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
+//* If the NODE_ENV variable is not Set or Exported,
+//* the next statement will return 'development' by Default
+console.log(`App.env: ${app.get("env")}`);
 
 app.use(express.json());
 
@@ -17,8 +23,23 @@ app.use(express.static("public"));
 
 // Helmet helps secure Express apps by setting HTTP response headers.
 app.use(helmet());
-// HTTP request logger middleware for node.js
-app.use(morgan("tiny"));
+
+// Configuration
+console.log(`Application Name: ${config.get("name")}`);
+console.log(`Mail Server: ${config.get("mail.host")}`);
+//* Display the password of the mail server:
+//! So, this config object looks at various sources to find a value
+//! for this configuration, the source could be a configuration file,
+//! a json file, it can be an 'environment variable', it can also be a
+//! command line argument.
+console.log(`Mail Password: ${config.get("mail.password")}`);
+
+//* Enable logging of Http Request only on the Development Machine
+if (app.get("env") === "development") {
+  // HTTP request logger middleware for node.js
+  app.use(morgan("tiny"));
+  console.log("Morgan Enabled...");
+}
 
 app.use(logger);
 
