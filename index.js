@@ -13,6 +13,11 @@ console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
 //* the next statement will return 'development' by Default
 console.log(`App.env: ${app.get("env")}`);
 
+//! When we set this, the Express will internally load this module.
+//! So, we don't have to require it.
+app.set("view engine", "pug");
+app.set("views", "./views"); // default values and path (is optional)
+
 app.use(express.json());
 
 // This Middleware function parses incoming request with url encoded payloads
