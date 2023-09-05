@@ -1,3 +1,4 @@
+const debug = require("debug")("app:startup");
 const config = require("config");
 const helmet = require("helmet");
 const morgan = require("morgan");
@@ -38,7 +39,7 @@ console.log(`Mail Password: ${config.get("mail.password")}`);
 if (app.get("env") === "development") {
   // HTTP request logger middleware for node.js
   app.use(morgan("tiny"));
-  console.log("Morgan Enabled...");
+  debug("Morgan Enabled...");
 }
 
 app.use(logger);
