@@ -4,6 +4,7 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const Joi = require("joi");
 const logger = require("./logger");
+const courses = require("./routes/courses");
 const authenticator = require("./authentication");
 const express = require("express");
 const app = express();
@@ -50,6 +51,8 @@ if (app.get("env") === "development") {
 app.use(logger);
 
 app.use(authenticator);
+
+app.use("/api/courses", courses);
 
 app.get("/", (request, response) =>
   response.render("index", {
