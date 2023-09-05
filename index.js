@@ -3,6 +3,7 @@ const config = require("config");
 const helmet = require("helmet");
 const morgan = require("morgan");
 const logger = require("./logger");
+const home = require("./routes/home");
 const courses = require("./routes/courses");
 const authenticator = require("./authentication");
 const express = require("express");
@@ -51,14 +52,8 @@ app.use(logger);
 
 app.use(authenticator);
 
+app.use("/", home);
 app.use("/api/courses", courses);
-
-app.get("/", (request, response) =>
-  response.render("index", {
-    title: "Express App",
-    message: "Welcome to Fady Express App",
-  })
-);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port ${port} ...`));
